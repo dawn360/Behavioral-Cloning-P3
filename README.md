@@ -1,12 +1,6 @@
 # **Behavioral Cloning** 
 
-## Writeup Template
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
-**Behavioral Cloning Project**
+**Project Goals**
 
 The goals / steps of this project are the following:
 * Use the simulator to collect data of good driving behavior
@@ -25,34 +19,7 @@ The goals / steps of this project are the following:
 [run3-loss]: ./output/run3-loss.png "Ex. Overfitting on run 3"
 [run5-loss]: ./output/run5-loss.png "Loss Graph on run 5"
 
-## Rubric Points
-### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
-
----
-### Files Submitted & Code Quality
-
-#### 1. Submission includes all required files and can be used to run the simulator in autonomous mode
-
-My project includes the following files:
-* model.py containing the script to create and train the model
-* drive.py for driving the car in autonomous mode
-* model.h5 containing a trained convolution neural network 
-* writeup_report.md or writeup_report.pdf summarizing the results
-
-#### 2. Submission includes functional code
-Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
-```sh
-python drive.py model.h5
-```
-
-#### 3. Submission code is usable and readable
-
-The model.py file contains the code for training and saving the convolution neural network.
-The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
-
 ### Model Architecture and Training Strategy
-
-#### 1. An appropriate model architecture has been employed
 
 After testing a very basic model with just a single fully connected layer, I researched a model from  `End to End Learning for Self-Driving Cars` paper https://arxiv.org/abs/1604.07316. The Original CNN Design was developed by Nvidia for Autopilot training. Originally the network consists of 9 layers, including a normalization layer, 5 convolutional layers and 3 fully connected layers.
 ![alt text][cnn_design]
@@ -62,18 +29,18 @@ My model, based on the Nvidia model, consists of a convolution neural network wi
 
 The model includes RELU layers to introduce nonlinearity (model.py line 63-73), the data is normalized in the model using a Keras lambda layer (model.y line 61) and a cropping layer. Cropping layer removes the upper and lower portion of the image eliminating the mountains & skies and the hud of the car this gives us a focused view of the road.
 
-#### 2. Attempts to reduce overfitting in the model
+#### Attempts to reduce overfitting in the model
 
 The model does not use dropout but rather we run a couple of epoch values between 2 & 7 stopped exactly at where the validation loss begins to peak. The ideal number of epochs was 5. visualizing the loss graph was helpful in finding the optimal epoch
 
 ![alt text][run3-loss]
 The model was trained and validated on different data sets to ensure that the model was not overfitting (model.py line 24). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
-#### 3. Model parameter tuning
+#### Model parameter tuning
 
 The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 76).
 
-#### 4. Appropriate training data
+#### Appropriate training data
 
 Training data is from the sample data given for this exercise.
 The Training data was split 80:20 to create a training, validation set
@@ -85,7 +52,7 @@ Sample data consist of 8037 images
 
 ### Model Architecture and Training Strategy
 
-#### 1. Solution Design Approach
+#### Solution Design Approach
 
 The overall strategy for deriving a model architecture was to start from a basic model and iteratively improve the 
 accuracy of that model
@@ -139,7 +106,7 @@ The vehicle is able to drive autonomously around the track without leaving the r
 [![Watch the video](https://img.youtube.com/vi/2ptZBSjly38/default.jpg)](https://youtu.be/2ptZBSjly38)
 ![alt text][run5-loss]
 
-#### 2. Final Model Architecture
+#### Final Model Architecture
 
 The final model architecture (model.py lines 61-73) consisted of a convolution neural network with the following layers and layer sizes
 
@@ -156,3 +123,19 @@ The final model architecture (model.py lines 61-73) consisted of a convolution n
         model.add(Dense(50, activation='relu'))
         model.add(Dense(10, activation='relu'))
         model.add(Dense(1, activation='tanh'))
+
+#### Project Files
+
+My project includes the following files:
+* model.py containing the script to create and train the model
+* drive.py for driving the car in autonomous mode
+* model.h5 containing a trained convolution neural network 
+* writeup_report.md or writeup_report.pdf summarizing the results
+
+#### How to Run
+Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
+```sh
+python drive.py model.h5
+```
+The model.py file contains the code for training and saving the convolution neural network.
+The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
